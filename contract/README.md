@@ -49,7 +49,7 @@ command:
 truffle migrate --compile-all --reset --network ganache
 ```
 
-To deploy a WASM application please see the sample application: (Loader){https://github.com/xactant/OTP/tree/master/loader}
+To deploy a WASM application please see the sample application: https://github.com/xactant/OTP/tree/master/loader
 
 To execute a WASM application deployed to the contract please see the sample
-application: (Example){https://github.com/xactant/OTP/tree/master/loader}
+application: https://github.com/xactant/OTP/tree/master/loader
