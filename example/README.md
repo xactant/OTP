@@ -21,7 +21,7 @@ Note:
 If you are using Windows you may need to run Truffle commands in PowerShell.
 ```
 
-## installation
+## Installation
 1. Open a command window (On Windows you may need to use PowerShell)
 2. Navigate to the folder the project was deployed to and execute:
   ```
