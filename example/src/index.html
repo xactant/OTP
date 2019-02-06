@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>OTP Example</title>
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Application -->
+  <link href="css/app.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="js/observable.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/otpci.js"></script>
+  <script src="js/otpwasm.js"></script>
+</head>
+<body>
+  <div class="container">
+       <div class="jumbotron text-center">
+            <h1>One Time Pad Example</h1>
+       </div>
+
+       <div class="row-lg-12" id="articleTemplate">
+         <div class="row">
+          <div class="col-lg-12">
+            <p id="account" class="welcome pull-right"></p>
+            <p id="accountBalance" class="welcome pull-left"></p>
+          </div>
+        </div>
+         <div class="panel panel-default panel-article">
+           <div class="panel-heading">
+             <h3 class="panel-title">
+               OTP Application Instance
+             </h3>
+           </div>
+           <div class="panel-body">
+             <strong>Status</strong>: <span class="otp-status"></span><br/>
+             <strong>Start Index</strong>: <span class="otp-start"></span><br/>
+             <strong>End Index</strong>: <span class="otp-end"></span><br/>
+             <strong>Checksum</strong>: <span class="otp-checksum"></span><br/>
+           </div>
+         </div>
+
+         <div class="panel panel-default panel-article">
+           <div class="panel-heading">
+             <h3 class="panel-title">
+               OTP Working Example
+             </h3>
+           </div>
+           <div class="panel-body">
+             <p>
+               <label for="target"></label>
+               <textarea  id="target" placeholder="TEXT TO ENCRYPT" value=""></textarea>
+             </p>
+             <p>
+               <label for="enckey"></label>
+               <textarea id="enckey" placeholder="KEY" value=""></textarea>
+             </p>
+             <p>
+               <button id="enc">Encrypt</button>
+             </p>
+
+             <p>
+               <label for="encrypted"></label>
+               <textarea id="encrypted" placeholder="ENCRYPTED TEXT" value=""></textarea>
+             </p>
+             <p>
+               <button id="dec">Decrypt</button>
+             </p>
+             <p>
+               <label for="decrypted"></label>
+               <textarea id="decrypted" placeholder="DECRYPTED TEXT" value=""></textarea>
+             </p>
+           </div>
+        </div>
+    </div>
+
+
+  </div>
+
+  <script>
+
+    function setEncrypted(text) {
+      encrypted.value = text;
+    }
+
+    function setDecrypted(text) {
+
+      decrypted.value = text;
+    }
+
+    function stringToBytes(text) {
+      var result = [];
+
+      if (text != null) {
+        for(var i = 0; i < text.length; i++) {
+          var c = text.charCodeAt(i);
+          result = result.concat(c);
+        }
+      }
+
+      return result;
+    }
+
+    OtpCI.workingOtpDef.subscribe(function(otpDef){
+      $("#account").text(OtpCI.account);
+      $("#accountBalance").text(web3.fromWei(OtpCI.accountBalance, "ether") + " ETH");
+
+      $(".otp-status").text(otpDef[2])
+      $(".otp-start").text(otpDef[3]);
+      $(".otp-end").text(otpDef[4]);
+      $(".otp-checksum").text(otpDef[5]);
+    });
+
+    Module.moduleLoaded.subscribe(function(data) {
+      Module.addOnPostRun(() => {
+        const otp = new Module.Otp('Otp')
+        enc.onclick = () => setEncrypted(otp.encrypt(target.value, enckey.value))
+        dec.onclick = () => setDecrypted(otp.decrypt(encrypted.value, enckey.value))
+      });
+
+  });
+
+    OtpCI.wasmData.subscribe(integrateWasmJS);
+  </script>
+</body>
+</html>

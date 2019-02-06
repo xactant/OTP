@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>C++ WASM Demo</title>
+</head>
+<body>
+  <!--
+  <span style="font-size: 50px;">??</span>
+  <button id="hi">Say hi</button>
+  <button id="bark">Bark (console)</button>
+  -->
+  <div>
+    <p>
+      <label for="target"></label>
+      <input type="text" id="target" placeholder="TEXT TO ENCRYPT" value=""></input>
+    </p>
+    <p>
+      <label for="enckey"></label>
+      <input type="input" id="enckey" placeholder="KEY" value=""></input>
+    </p>
+    <p>
+      <button id="enc">Encrypt</button>
+    </p>
+
+    <p>
+      <label for="encrypted"></label>
+      <input type="input" id="encrypted" placeholder="ENCRYPTED TEXT" value=""></input>
+    </p>
+    <p>
+      <button id="dec">Decrypt</button>
+    </p>
+    <p>
+      <label for="decrypted"></label>
+      <input type="input" id="decrypted" placeholder="DECRYPTED TEXT" value=""></input>
+    </p>
+  </div>
+
+  <script src="/otp.js"></script>
+
+  <script>
+
+    function setEncrypted(text) {
+      encrypted.value = text;
+    }
+
+    function setDecrypted(text) {
+
+      decrypted.value = text;
+    }
+
+    function stringToBytes(text) {
+      var result = [];
+
+      if (text != null) {
+        for(var i = 0; i < text.length; i++) {
+          var c = text.charCodeAt(i);
+          result = result.concat(c);
+        }
+      }
+
+      return result;
+    }
+
+    Module.addOnPostRun(() => {
+      const otp = new Module.Otp('Otp')
+      enc.onclick = () => setEncrypted(otp.encrypt(target.value, enckey.value))
+      dec.onclick = () => setDecrypted(otp.decrypt(encrypted.value, enckey.value))
+    })
+  </script>
+</body>
+</html>
