@@ -5,7 +5,7 @@ The solution is a memory resident application, hosted in a decentralized manner 
 
 This project group contains three projects that (1) define the OTP WASM Assembly, (2) demonstrate how a base64 encoded version of the WASM can be loaded into and hosted in an Ehtereum contract and (3) demonstrate how to access and execute the hosted WASM. 
 
-The example applications provide a Proof of Concept demonstrating how a WASM application can be hosted in a decentralized manner. By using WASM the __cost of executing the state change on the contract is encurred by the developer__. Howver, since reads are free, users can freely access the application. This example uses Ethereum as Ethereum is the most mature smart contract environment. However there is no reason why other smart contract environments such as Cardano, Lisk, could be used.
+The example applications provide a Proof of Concept demonstrating how a WASM application can be hosted in a decentralized manner. By using WASM the __cost of executing the state change on the contract is encurred by the developer__. However, since reads are free, users can freely access the application. This example uses Ethereum as Ethereum is the most mature smart contract environment. However there is no reason why other smart contract environments such as Cardano, Lisk, could be used.
 
 ```
  Copyright 2019 by Xactant 42
