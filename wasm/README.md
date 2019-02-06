@@ -3,7 +3,7 @@ This projects defines a C++ application that provides functionality to encrypt
 and decrypt data. The OTP application uses modular addition to combine (or
 de-combine in the case of decryption) the target text with the supplied key.
 
-(from Wikipedia){https://en.wikipedia.org/wiki/One-time_pad}
+from Wikipedia: https://en.wikipedia.org/wiki/One-time_pad
 In cryptography, the one-time pad (OTP) is an encryption technique that cannot
 be cracked, but requires the use of a one-time pre-shared key the same size as,
 or longer than, the message being sent. In this technique, a plaintext is
@@ -15,7 +15,7 @@ in whole or in part, and (4) kept completely secret, then the resulting
 ciphertext will be impossible to decrypt or break.
 
 ## Prerequisites
-1. Emscripten: (https://emscripten.org/){https://emscripten.org/}
+1. Emscripten: https://emscripten.org/
 
 ## Building
 1. Navigate to the folder the project was deployed to
