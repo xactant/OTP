@@ -1,0 +1,14 @@
+{
+  "name": "otp",
+  "version": "1.0.0",
+  "description": "Defines an Ethereum contract in Solifity that provides a vessel to house a decentralized WASM application",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OTP",
+  "license": "ISC"
+}

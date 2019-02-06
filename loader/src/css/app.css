@@ -1,0 +1,66 @@
+body {
+  padding-top: 40px;
+}
+
+textarea {
+  height: 5em;
+  width: 18em;
+}
+
+.welcome {
+  font-size: 18px;
+  display: inline;
+  padding: 5px;
+}
+
+
+@media (min-width: 359px) {
+  textarea {
+    height: 5em;
+    width: 21em;
+  }
+}
+
+@media (min-width: 374px) {
+  textarea {
+    height: 5em;
+    width: 23em;
+  }
+}
+
+@media (min-width: 410px) {
+  textarea {
+    height: 6em;
+    width: 25em;
+  }
+}
+
+@media (min-width: 765px) {
+  textarea {
+    height: 6em;
+    width: 49em;
+  }
+}
+
+@media (min-width: 1020px) {
+  textarea {
+    height: 10em;
+    width: 65em;
+  }
+}
+
+@media (min-width: 1360px) {
+  textarea {
+    height: 10em;
+    width: 80em;
+  }
+}
+
+@media (max-width: 425px) {
+  #account {
+    font-size: small;
+  }
+  #accountBalance {
+    font-size: small;
+  }
+}

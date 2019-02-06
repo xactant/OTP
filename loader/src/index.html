@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+     <title>OTP</title>
+
+     <!-- Bootstrap -->
+     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+     <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+     <!-- Application -->
+     <link href="css/app.css" rel="stylesheet">
+     <style>
+       #byte_content {
+         margin: 5px 0;
+         max-height: 100px;
+         overflow-y: auto;
+         overflow-x: hidden;
+       }
+       #byte_range { margin-top: 5px; }
+     </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="jumbotron text-center">
+      <h1>One Time Pad Loader</h1>
+    </div>
+    <div class="row-lg-12" id="articleTemplate">
+      <div class="panel panel-default panel-article">
+        <div class="panel-heading">
+          <h3 class="panel-title"></h3>
+        </div>
+        <div class="panel-body">
+         <!--  -->
+         <div class="row">
+           <div class="col-xs-6">
+             <div class="row">
+               <input type="file" id="files" name="file" />
+             </div>
+             <div class="row">
+               <label for="appVersion">Application Version</label>
+               <input type="text" id="appVersion" name="appVersion" value=""></input>
+             </div>
+           </div>
+          <div class="col-xs-6">
+            <div class="row">
+              <label for="chunk">Chunk Size</label>
+              <input type="text" id="chunk" name="chunk" value="2048"></input>
+            </div>
+              <div class="row">
+                <label for="startIndex">Start Index</label>
+                <input type="text" id="startIndex" name="startIndex"  value="0"></input>
+              </div>
+
+              <div class="row">
+                <button id="btnLoadData" value="Load" class="loadButton">Load</button>
+                <div class="col-xs-12" id="verifyMsg"></div>
+              </div>
+              <div id="byte_range"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div id="byte_content" class="col-xs-12"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/otpci.js"></script>
+
+   <script>
+     function readFile () {
+       var files = document.getElementById('files').files;
+       if (!files.length) {
+         alert('Please select a file!');
+         return;
+       }
+       document.getElementById('byte_content').innerHtml = '';
+       var file = files[0];
+       var size = file.size;
+       var chunk = parseInt(document.getElementById('chunk').value);
+       var start = parseInt(document.getElementById('startIndex').value);
+       var verifyTarget = document.getElementById('verifyMsg');
+       var end = chunk;
+
+       verifyTarget.innerHTML = 'Adding ...';
+
+       if (start < size) {
+         end = start + chunk;
+
+         if (end > size) {
+           end = start + (size - start);
+         }
+       }
+
+       var callback = function (result) {
+         console.log('Read ' + result.length + ' chars.');
+         var appVersion = parseInt(document.getElementById('appVersion').value);
+         var s = document.getElementById('byte_content').innerHTML + '<p>' + result + '</p>';
+         document.getElementById('byte_content').innerHTML = s;
+
+         start = start + chunk + 1;
+         document.getElementById('startIndex').value = start;
+
+         App.addDatum(appVersion, result, verifyTarget);
+       };
+
+       readBlob(file,start,end,callback);
+     }
+
+     function readBlob(file, opt_startByte, opt_stopByte, callback) {
+       var start = parseInt(opt_startByte) || 0;
+       var stop = parseInt(opt_stopByte) || file.size - 1;
+
+       var reader = new FileReader();
+
+       // If we use onloadend, we need to check the readyState.
+       reader.onloadend = function(evt) {
+         if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+           callback(evt.target.result);
+
+         }
+       };
+
+       var blob = file.slice(start, stop + 1);
+       return reader.readAsText(blob);
+     }
+
+     document.querySelector('.loadButton').addEventListener('click', function(evt) {
+       if (evt.target.tagName.toLowerCase() == 'button') {
+         readFile();
+       }
+     }, false);
+   </script>
+</body>
+
+</html>
