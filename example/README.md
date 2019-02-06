@@ -8,11 +8,11 @@ encrypting and decrypting text.
 
 ## Prerequisites
 
-1. Node: (https://nodejs.org/en/download/){https://nodejs.org/en/download/}
-2. NPM: (https://www.npmjs.com/get-npm){https://www.npmjs.com/get-npm}
-3. Truffle: (https://truffleframework.com/docs/truffle/getting-started/installation){https://truffleframework.com/docs/truffle/getting-started/installation}
-4. Ganache: (https://truffleframework.com/ganache){https://truffleframework.com/ganache}
-5. The OTP Contract deployed locally on Ganache (see project [OTP CONTRACT PROJECT LINK HERE])
+1. Node: https://nodejs.org/en/download/
+2. NPM: https://www.npmjs.com/get-npm
+3. Truffle: https://truffleframework.com/docs/truffle/getting-started/installation
+4. Ganache: https://truffleframework.com/ganache
+5. The OTP Contract deployed locally on Ganache (see project https://github.com/xactant/OTP/tree/master/loader)
 6. MetaMask installed in your favorite browser with a reference to the first
 account listed in Ganache.
 
