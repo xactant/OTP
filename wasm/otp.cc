@@ -77,13 +77,11 @@ unsigned char Otp::decryptByte (unsigned char c, unsigned char k)
 
 string Otp::vecToString(vector<unsigned char> vect)
 {
-  cout << "vecToString vect has " << vect.size() << " bytes" << '\n';
   string resp = "";
 
   for (auto v = vect.cbegin(); v != vect.cend(); v++)
   {
-    cout << "Adding byte " << (int)*v << '\n';
-		resp += *v;
+    resp += *v;
   }
 
   return resp;
@@ -91,8 +89,6 @@ string Otp::vecToString(vector<unsigned char> vect)
 
 string Otp::encrypt (string text, string key)
 {
-  cout << "encrypt\nReceived: " << text <<  " and " << key << '\n';
-
   vector<unsigned char> textVec(text.begin(), text.end());
   vector<unsigned char> keyVec(key.begin(), key.end());
   vector<unsigned char> data;
@@ -100,7 +96,6 @@ string Otp::encrypt (string text, string key)
 
   for(int i = 0; i < textVec.size(); i++)
   {
-    cout << "encoding byte " << textVec[i];
     int x = encryptByte(textVec[i], keyVec[keyIndex]);
 
     keyIndex++;
@@ -109,8 +104,7 @@ string Otp::encrypt (string text, string key)
       keyIndex = 0;
     }
 
-    cout << " to " << (int)x << '\n';
-		data.push_back((unsigned char)x);
+    data.push_back((unsigned char)x);
   }
 
   return base64_encode(data.data() , data.size());
@@ -118,8 +112,6 @@ string Otp::encrypt (string text, string key)
 
 string Otp::decrypt (string text, string key)
 {
-  cout << "decrypt\nReceived: " << text << " and " << key << '\n';
-
   string enc = base64_decode(text);
 
   vector<unsigned char> textVec(enc.begin(), enc.end());
@@ -127,20 +119,14 @@ string Otp::decrypt (string text, string key)
   vector<unsigned char> data;
   int keyIndex = 0;
 
-  cout << "enc is " << enc.size() << " bytes textVec is " << textVec.size() << " bytes" << '\n';
-
   for(int i = 0; i < textVec.size(); i++)
   {
-    cout << i << ") decoding byte " << (int)textVec[i];
-
     int x = decryptByte(textVec[i], keyVec[keyIndex]);
     keyIndex++;
 
     if(keyIndex > keyVec.size() - 1) {
       keyIndex = 0;
     }
-
-    cout << " to " << (int)x << '\n';
 
 		data.push_back((unsigned char)x);
   }
